@@ -4,11 +4,15 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -87,25 +91,54 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
-            View loadingIndicator = findViewById(R.id.loading_indicator);
-            loadingIndicator.setVisibility(View.GONE);
+           // View loadingIndicator = findViewById(R.id.loading_indicator);
+            //loadingIndicator.setVisibility(View.GONE);
 
 
         }
     }
 
 
-    @Override
-    public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        // Create a new loader for the given URL
-        return new NewsLoader(this, GUARDIAN_REQUEST_URL);
-    }
+
+        @Override
+        // onCreateLoader instantiates and returns a new Loader for the given ID
+        public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+            // getString retrieve a String value for the max News item
+            String maxNews = sharedPrefs.getString(
+                    getString(R.string.settings_max_news_key),
+                    getString(R.string.settings_max_news_default));
+            // getString retrieve a String value for Order-By item
+            String orderBy = sharedPrefs.getString(
+                    getString(R.string.settings_order_by_key),
+                    getString(R.string.settings_order_by_default));
+
+            // parse breaks apart the URI string that's passed into its parameter
+            Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+            // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+            Uri.Builder uriBuilder = baseUri.buildUpon();
+
+            // Append query parameter and its value. For example, the `format=geojson`
+            uriBuilder.appendQueryParameter("show-tags", "contributor");
+            uriBuilder.appendQueryParameter("order-by", orderBy);
+            uriBuilder.appendQueryParameter("show-fields", "all");
+            uriBuilder.appendQueryParameter("page-size", maxNews);
+            uriBuilder.appendQueryParameter("api-key", "test");
+
+            // Return the completed uri `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmag=minMagnitude&orderby=time
+            return new NewsLoader(this, uriBuilder.toString());
+
+        }
+
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
         // Hide loading indicator because the data has been loaded
-        View loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
+        //View loadingIndicator = findViewById(R.id.loading_indicator);
+        //loadingIndicator.setVisibility(View.GONE);
 
         // Clear the adapter of previous news data
         mAdapter.clear();
@@ -121,6 +154,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<News>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
+    }
+
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

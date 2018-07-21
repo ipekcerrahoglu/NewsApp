@@ -47,4 +47,3 @@ public class NewsLoader extends AsyncTaskLoader<List<News>>   {
 }
 
 
-//I am at Stage 2
