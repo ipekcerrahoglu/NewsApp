@@ -103,7 +103,9 @@ public  class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
+
             Log.e(LOG_TAG, "Problem retrieving the news JSON results.", e);
+
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -115,6 +117,7 @@ public  class QueryUtils {
                 inputStream.close();
             }
         }
+
         return jsonResponse;
     }
 
