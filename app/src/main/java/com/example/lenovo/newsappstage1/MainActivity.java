@@ -20,7 +20,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
     public static final String GUARDIAN_REQUEST_URL =
-            "http://content.guardianapis.com/search?q=debates&api-key=test";
+            "http://content.guardianapis.com/search?q=debates&show-tags=contributor&api-key=6b29ef5e-cea4-4df1-9cc9-003943120910";
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
