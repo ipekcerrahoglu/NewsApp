@@ -41,13 +41,18 @@ public  class QueryUtils {
         /**
          * Query the GUARDIAN dataset and return a list of {@link News} objects.
          */
-        public static List<News> fetchNewsData (String requestUrl) throws IOException  {
+        public static List<News> fetchNewsData (String requestUrl)   {
             if (requestUrl == null) {
                 return null;
             }
 
             URL url = createUrl(requestUrl);
-            String jsonResponse = makeHttpRequest(url);
+            String jsonResponse = null;
+            try {
+                jsonResponse = makeHttpRequest(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             List<News> news = extractFeatureFromJson(jsonResponse);
 
