@@ -103,7 +103,11 @@ public  class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
+<<<<<<< Updated upstream
             Log.e(LOG_TAG, "Problem retrieving the earthquake News results.", e);
+=======
+            Log.e(LOG_TAG, "Problem retrieving the news JSON results.", e);
+>>>>>>> Stashed changes
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
