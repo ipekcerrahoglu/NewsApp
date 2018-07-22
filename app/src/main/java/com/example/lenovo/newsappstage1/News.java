@@ -20,34 +20,18 @@ public class News {
         return mTitle;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
     public String getDate() {
         return mDate;
-    }
-
-    public void setDate(String date) {
-        mDate = date;
     }
 
     public String getUrl() {
         return mUrl;
     }
 
-    public void setUrl(String url) {
-        mUrl = url;
-    }
-
-
     public String getSection() {
         return mSection;
     }
 
-    public void setSection(String section) {
-        mSection = section;
-    }
 
     @Override
     public String toString() {
