@@ -103,7 +103,7 @@ public  class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the earthquake News results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -179,11 +179,11 @@ public  class QueryUtils {
                 String section = properties.getString("sectionName");
 
 
-                // Create a new {@link Earthquake} object with the magnitude, location, time,
+                // Create a new {@link News} object with the magnitude, location, time,
                 // and url from the JSON response.
                 News news = new News(title, date, url, section);
 
-                // Add the new {@link Earthquake} to the list of earthquakes.
+                // Add the new {@link News} to the list of news.
                 newsList.add(news);
             }
 
@@ -191,10 +191,10 @@ public  class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of news
         return newsList;
     }
 }
