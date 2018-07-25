@@ -104,12 +104,9 @@ public  class QueryUtils {
             }
         } catch (IOException e) {
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> master
-            Log.e(LOG_TAG, "Problem retrieving the news JSON results.", e);
+
 
         } finally {
             if (urlConnection != null) {
