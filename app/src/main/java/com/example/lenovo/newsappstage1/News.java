@@ -5,7 +5,6 @@ public class News {
     private String mTitle;
     private String mDate;
     private String mUrl;
-    private String mAuthor;
     private String mSection;
 
     public News(String title, String date, String url, String section) {

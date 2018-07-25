@@ -162,7 +162,7 @@ public  class QueryUtils {
 
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of features (or earthquakes).
-            JSONArray newsArray = baseJsonResponse.getJSONArray("results");
+            JSONArray newsArray = baseJsonResponse.getJSONObject("response").getJSONArray("results");
 
             // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
             for (int i = 0; i < newsArray.length(); i++) {
@@ -173,13 +173,13 @@ public  class QueryUtils {
                 // For a given earthquake, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
                 // for that earthquake.
-                JSONObject properties = currentNews.getJSONObject("tags");
+                JSONArray tags = currentNews.getJSONArray("tags");
 
                 // Extract the values for the key
-                String title = properties.getString("webTitle");
-                String date = properties.getString("webPublicationName");
-                String url = properties.getString("webUrl");
-                String section = properties.getString("sectionName");
+                String title = currentNews.getString("webTitle");
+                String date = currentNews.getString("webPublicationDate");
+                String url = currentNews.getString("webUrl");
+                String section = currentNews.getString("sectionName");
 
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
