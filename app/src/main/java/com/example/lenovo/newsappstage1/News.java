@@ -6,11 +6,13 @@ public class News {
     private String mDate;
     private String mUrl;
     private String mSection;
+    private String mAuthor;
 
-    public News(String title, String date, String url, String section) {
+    public News(String title, String date, String url, String section, String author) {
         mTitle = title;
         mDate = date;
         mUrl = url;
+        mAuthor=author;
 
         mSection = section;
     }
@@ -31,14 +33,12 @@ public class News {
         return mSection;
     }
 
+    public String getmAuthor() {
+        return mAuthor;
+    }
 
     @Override
     public String toString() {
-        return "News{" +
-                "title='" + mTitle + '\'' +
-                ", url='" + mUrl + '\'' +
-                ", date='" + mDate + '\'' +
-                ", section='" + mSection + '\'' +
-                '}';
+        return super.toString();
     }
 }

@@ -45,6 +45,9 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView type = (TextView) view.findViewById(R.id.type_text_view);
         type.setText(currentNews.getSection());
 
+        TextView author = (TextView) view.findViewById(R.id.author_text_view);
+        author.setText(currentNews.getmAuthor());
+
         return view;
     }
 }

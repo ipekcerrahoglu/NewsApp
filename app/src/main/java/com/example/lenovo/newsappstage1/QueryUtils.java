@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Helper methods related to requesting and receiving news data from GUARDIAN.
  */
-public  class QueryUtils {
+public final class QueryUtils {
 
     /**
      * Tag for the log messages
@@ -89,8 +89,8 @@ public  class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            //urlConnection.setReadTimeout(10000 /* milliseconds */);
+            //urlConnection.setConnectTimeout(15000 /* milliseconds */);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
@@ -175,6 +175,14 @@ public  class QueryUtils {
                 // for that earthquake.
                 JSONArray tags = currentNews.getJSONArray("tags");
 
+                String author = "No author";
+                if(tags.length() > 0) {
+                    // get author from tags array
+
+                    author = tags.getJSONObject(0).getString("webTitle");
+                }
+
+
                 // Extract the values for the key
                 String title = currentNews.getString("webTitle");
                 String date = currentNews.getString("webPublicationDate");
@@ -184,7 +192,7 @@ public  class QueryUtils {
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
                 // and url from the JSON response.
-                News news = new News(title, date, url, section);
+                News news = new News(title, date, url, section, author);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.
                 newsList.add(news);
