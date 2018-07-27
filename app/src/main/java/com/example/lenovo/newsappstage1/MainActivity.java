@@ -4,9 +4,11 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -97,8 +99,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        // getString retrieve a String value for the max News item
+        String maxNews = sharedPreferences.getString(
+                getString(R.string.settings_max_news_key),
+                getString(R.string.settings_max_news_default));
+        // getString retrieve a String value for Order-By item
+        String orderBy = sharedPreferences.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
+
+        // parse breaks apart the URI string
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+        // buildUpon prepares the base Uri
+        Uri.Builder builder = baseUri.buildUpon();
+        // append query parameter
+        builder.appendQueryParameter("show-tags", "contributor");
+        builder.appendQueryParameter("order-by", orderBy);
+        builder.appendQueryParameter("show-fields", "all");
+        builder.appendQueryParameter("page-size", maxNews);
+        builder.appendQueryParameter("api-key", "test");
+
         // Create a new loader for the given URL
-        return new NewsLoader(this, GUARDIAN_REQUEST_URL);
+        return new NewsLoader(this, builder.toString());
     }
 
     @Override
