@@ -2,7 +2,6 @@ package com.example.lenovo.newsappstage1;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import java.io.IOException;
 import java.util.List;
 
 /**

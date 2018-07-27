@@ -36,8 +36,6 @@ public final class QueryUtils {
      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
      */
 
-
-
         /**
          * Query the GUARDIAN dataset and return a list of {@link News} objects.
          */

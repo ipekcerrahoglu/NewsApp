@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
     public static final String GUARDIAN_REQUEST_URL =
-            "http://content.guardianapis.com/search?q=debates&show-tags=contributor&api-key=6b29ef5e-cea4-4df1-9cc9-003943120910";
+            "http://content.guardianapis.com/search?q=debates";
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
@@ -145,6 +147,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<News>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
+    }
+
+    /**
+     * @param menu The options menu which display the menu item.
+     * @return true for the menu to be displayed;
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+
+    /**
+     * @param item The menu item that was selected.
+     * @return boolean Return true to allow
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
